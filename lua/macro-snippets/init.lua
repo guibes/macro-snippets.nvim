@@ -140,6 +140,18 @@ end
 function M.add_macro(name, register, description, filetype)
   local macro_content = vim.fn.getreg(register)
 
+  -- Define a threshold for large macro content (e.g., 10KB)
+  local large_macro_threshold = 10000
+  if macro_content and #macro_content > large_macro_threshold then
+    vim.notify(
+      string.format(
+        "Warning: The recorded macro content is very large (%d bytes). Please ensure this was intended.",
+        #macro_content
+      ),
+      vim.log.levels.WARN
+    )
+  end
+
   -- Validate macro content before adding
   if not macro_content or macro_content == "" then
     vim.notify("Error: Empty macro content. Macro not saved.", vim.log.levels.ERROR)

@@ -76,6 +76,18 @@ This will:
 2. Start recording a macro in the specified register
 3. Save the macro when you finish recording (by pressing `q`)
 
+**Important Note on Macro Content:**
+
+The plugin saves the exact sequence of keys present in the specified register after you finish recording (by pressing `q` the second time). If your recorded keystrokes themselves include commands that place very large content (e.g., the entire file) into that *same recording register*, then the macro's definition will become that large content.
+
+For example:
+- If you start recording into register `a` (by typing `qa`).
+- Then, as part of your recording, you execute `ggVG"ay` (select all text, then yank it specifically into register `a`).
+- When you stop recording (by typing `q` again), the content of register `a` will be the entire file's text.
+- Consequently, the macro saved by this plugin for "register a" will be the entire file's text.
+
+Please be mindful of this when recording. If you intend to yank text as part of a macro, ensure you are yanking it to the intended register (often the unnamed register `"` if not specified, or a different named register) unless you explicitly want the recording register to contain that yanked text as the macro's definition. A warning will be issued if the recorded content seems excessively large (see next step in plan).
+
 ### Browsing and applying macros
 
 :Telescope macros
