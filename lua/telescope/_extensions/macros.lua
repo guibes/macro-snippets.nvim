@@ -35,11 +35,15 @@ macros.browse = function(opts)
     previewer = previewers.new_buffer_previewer {
       title = "Macro Content",
       get_buffer_by_name = function(entry)
-        -- Use a combination of name and index for uniqueness, though name should be enough
-        return "macro_preview_" .. entry.value.name .. "_" .. entry.index
+        if not entry or not entry.value or not entry.value.name or entry.value.index == nil then
+          -- Return a unique, default buffer name if entry or its critical fields are nil
+          -- Using os.time() and math.random() helps ensure uniqueness for these temporary buffers.
+          return "macro_preview_invalid_entry_" .. os.time() .. "_" .. math.random(10000)
+        end
+        return "macro_preview_" .. entry.value.name .. "_" .. entry.value.index
       end,
       define_preview = function(self, entry, status)
-        if not entry.value or not entry.value.content then
+        if not entry or not entry.value or not entry.value.content then -- Added 'not entry' for safety
           vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, {"No content to preview."})
           return
         end
