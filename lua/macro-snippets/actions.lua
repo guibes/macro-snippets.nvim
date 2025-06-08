@@ -25,7 +25,13 @@ function M.edit_macro(prompt_bufnr)
     local buf = vim.api.nvim_get_current_buf()
 
     -- Set buffer content to the macro
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { selection.value.content })
+    local lines = {}
+    if selection.value.content and selection.value.content ~= "" then
+      for s in string.gmatch(selection.value.content, "[^\r\n]+") do
+        table.insert(lines, s)
+      end
+    end
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
     -- Set buffer options
     vim.api.nvim_buf_set_option(buf, 'buftype', 'acwrite')
@@ -50,7 +56,8 @@ function M.delete_macro(prompt_bufnr)
     if confirm:lower() == 'y' then
       macros.delete_macro(selection.index)
       actions.close(prompt_bufnr)
-      require('telescope.builtin').resume()
+      -- Re-open the macro browser to reflect the updated list
+      require('telescope').extensions.macros.macros()
     end
   end
 end
