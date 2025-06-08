@@ -1,0 +1,114 @@
+[
+  {
+    "name": "MD: Insert TODO",
+    "description": "Inserts a markdown TODO item: '- [ ] '",
+    "register": "a",
+    "filetype": "markdown",
+    "created_at": 1678886400,
+    "encoded_content": "aS0gWyBdIDxFc2M+QQ=="
+  },
+  {
+    "name": "MD: Bold Word (Cursor Middle)",
+    "description": "Surrounds the current word with **** and leaves cursor in the middle.",
+    "register": "a",
+    "filetype": "markdown",
+    "created_at": 1678886401,
+    "encoded_content": "aSoqKio8RXNjPmho"
+  },
+  {
+    "name": "JS/TS: Console Log Word",
+    "description": "Yanks current word, adds console.log('P:', word); on new line.",
+    "register": "a",
+    "filetype": "javascript,typescript",
+    "created_at": 1678886402,
+    "encoded_content": "eWl3b2NvbnNvbGUubG9nKCdQOicsIDxFc2M+cGEpOzxFc2M+a0pP"
+  },
+  {
+    "name": "JS/TS: Arrow Function",
+    "description": "Inserts a basic arrow function snippet: () => { ... }",
+    "register": "a",
+    "filetype": "javascript,typescript",
+    "created_at": 1678886403,
+    "encoded_content": "aSgpID0+IHs8Q1I+PENSPn08RXNjPmtraQ=="
+  },
+  {
+    "name": "JSX: Insert Fragment",
+    "description": "Inserts JSX fragment tags <>...</> and positions cursor within.",
+    "register": "a",
+    "filetype": "javascriptreact,typescriptreact",
+    "created_at": 1678886404,
+    "encoded_content": "aTw+PENSPjwvPjxFc2M+a0E="
+  },
+  {
+    "name": "JSX: Basic Component",
+    "description": "Inserts a basic functional JSX component structure.",
+    "register": "a",
+    "filetype": "javascriptreact,typescriptreact",
+    "created_at": 1678886405,
+    "encoded_content": "aWNvbnN0IE5ld0NvbXBvbmVudCA9ICgpID0+IHs8Q1I+cmV0dXJuICg8Q1I+PGRpdj5Db250ZW50PC9kaXY+PENSPik7PENSPn07PEVzYz43a0E="
+  },
+  {
+    "name": "YAML: New Sequence Item",
+    "description": "Adds a new sequence item '- ' on the next line.",
+    "register": "a",
+    "filetype": "yaml",
+    "created_at": 1678886406,
+    "encoded_content": "QTxDUj4tIA=="
+  },
+  {
+    "name": "YAML: Comment Line",
+    "description": "Comments the current line with '# ' at the beginning.",
+    "register": "a",
+    "filetype": "yaml",
+    "created_at": 1678886407,
+    "encoded_content": "MGkjIDxFc2M+"
+  },
+  {
+    "name": "Go: Error Check",
+    "description": "Inserts a common Go error check: if err != nil { ... }",
+    "register": "a",
+    "filetype": "go",
+    "created_at": 1678886408,
+    "encoded_content": "b2lmIGVyciAhPSBuaWwgezxDUj5yZXR1cm4gZXJyPENSPn08RXNjPg=="
+  },
+  {
+    "name": "Go: Print Var (Word)",
+    "description": "Yanks current word, adds fmt.Println("P:", word) on new line.",
+    "register": "a",
+    "filetype": "go",
+    "created_at": 1678886409,
+    "encoded_content": "eWl3b2ZtdC5QcmludGxuKCJQOiIsIDxFc2M+cGEpPEVzYz5rSk8="
+  },
+  {
+    "name": "Lua: Local Function",
+    "description": "Inserts a basic Lua local function snippet.",
+    "register": "a",
+    "filetype": "lua",
+    "created_at": 1678886410,
+    "encoded_content": "aWxvY2FsIGZ1bmN0aW9uKCk8Q1I+PENSPmVuZDxFc2M+a0E="
+  },
+  {
+    "name": "Lua: Print Var (Word)",
+    "description": "Yanks current word, adds print("P:", word) on new line.",
+    "register": "a",
+    "filetype": "lua",
+    "created_at": 1678886411,
+    "encoded_content": "eWl3b3ByaW50KCJQOiIsIDxFc2M+cGEpPEVzYz5rSk8="
+  },
+  {
+    "name": "PY: Main Guard",
+    "description": "Inserts Python's if __name__ == "__main__": ... guard.",
+    "register": "a",
+    "filetype": "python",
+    "created_at": 1678886412,
+    "encoded_content": "aWlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6PENSPnBhc3M8RXNjPk8="
+  },
+  {
+    "name": "PY: Print Var (f-string, Word)",
+    "description": "Yanks current word, adds print(f"P: {word}") on new line.",
+    "register": "a",
+    "filetype": "python",
+    "created_at": 1678886413,
+    "encoded_content": "eWl3b3ByaW50KGYiUDoge3tFc2M+cGF9IikxRXNjPmtKTw=="
+  }
+]

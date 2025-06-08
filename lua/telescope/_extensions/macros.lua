@@ -4,6 +4,7 @@ local pickers = require('telescope.pickers')
 local conf = require('telescope.config').values
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
+local previewers = require('telescope.previewers')
 local macro_actions = require('macro-snippets.actions')
 local utils = require('macro-snippets.utils')
 local macros_module = require('macro-snippets')
@@ -31,6 +32,33 @@ macros.browse = function(opts)
       end
     }),
     sorter = conf.generic_sorter(opts),
+    previewer = previewers.new_buffer_previewer {
+      title = "Macro Content",
+      get_buffer_by_name = function(entry)
+        if not entry or not entry.value or not entry.value.name or entry.value.index == nil then
+          -- Return a unique, default buffer name if entry or its critical fields are nil
+          -- Using os.time() and math.random() helps ensure uniqueness for these temporary buffers.
+          return "macro_preview_invalid_entry_" .. os.time() .. "_" .. math.random(10000)
+        end
+        return "macro_preview_" .. entry.value.name .. "_" .. entry.value.index
+      end,
+      define_preview = function(self, entry, status)
+        if not entry or not entry.value or not entry.value.content then -- Added 'not entry' for safety
+          vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, {"No content to preview."})
+          return
+        end
+        -- Split content by newline for setting buffer lines
+        local lines = {}
+        for s in string.gmatch(entry.value.content, "[^\r\n]+") do
+          table.insert(lines, s)
+        end
+        vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, lines)
+        -- Optional: Set filetype for syntax highlighting if macros could benefit from it.
+        -- For raw Vim macro strings, 'text' is likely fine.
+        -- If macros could be Lua, you might set 'lua'.
+        vim.api.nvim_buf_set_option(self.state.bufnr, 'filetype', 'text')
+      end,
+    },
     attach_mappings = function(prompt_bufnr, map)
       -- Apply macro with <CR>
       actions.select_default:replace(function()
@@ -62,7 +90,7 @@ macros.record = function(opts)
 
   local register = vim.fn.input("Register to use (a-z): ")
   if register == "" or not register:match("^[a-z]$") then
-    print("Invalid register. Must be a single letter a-z.")
+    vim.notify("Invalid register. Must be a single letter a-z.", vim.log.levels.ERROR)
     return
   end
 
@@ -73,7 +101,7 @@ macros.record = function(opts)
 
   -- Start recording
   vim.cmd("normal! q" .. register)
-  print("Recording macro... Press q to stop.")
+  vim.notify("Recording macro '" .. name .. "' into register @" .. register .. ". Press q to stop.", vim.log.levels.INFO)
 
   -- After recording, the user will press q to stop
   -- We'll use an autocmd to capture when recording stops
@@ -82,8 +110,7 @@ macros.record = function(opts)
       autocmd!
       autocmd RecordingLeave * lua require('macro-snippets').add_macro("]] ..
     name .. [[", "]] .. register .. [[", "]] .. description .. [[", "]] .. filetype .. [[")
-      autocmd RecordingLeave * lua vim.cmd('autocmd! MacroRecordingComplete')
-      autocmd RecordingLeave * lua print("Macro ']] .. name .. [[' saved!")
+      autocmd RecordingLeave * lua vim.cmd('autocmd! MacroRecordingComplete') -- This removes the augroup itself
     augroup END
   ]])
 end
