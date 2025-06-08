@@ -203,6 +203,29 @@ function M.delete_macro(index)
   return true
 end
 
+function M.apply_macro_by_name(macro_name)
+  if type(macro_name) ~= "string" or macro_name == "" then
+    vim.notify("Error: Macro name must be a string and cannot be empty.", vim.log.levels.ERROR)
+    return false
+  end
+
+  local found_macro = nil
+  for _, macro_obj in ipairs(M.macros) do
+    if macro_obj.name == macro_name then
+      found_macro = macro_obj
+      break
+    end
+  end
+
+  if found_macro then
+    M.apply_macro(found_macro) -- M.apply_macro already exists and handles its own notifications/errors
+    return true
+  else
+    vim.notify("Error: Macro with name '" .. macro_name .. "' not found.", vim.log.levels.ERROR)
+    return false
+  end
+end
+
 -- Set up the plugin
 function M.setup(opts)
   opts = opts or {}

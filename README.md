@@ -87,6 +87,112 @@ In the Telescope window:
 - Press `<C-e>` to edit the selected macro
 - Press `<C-d>` to delete the selected macro
 
+## Alternative Ways to Trigger Macros
+
+Besides using the Telescope interface, you can also set up other ways to trigger your saved macros for even quicker access. This requires adding a small helper function to your `init.lua` (or any file sourced by it) that the plugin will provide.
+
+First, ensure this function is available in your Neovim setup by adding the following to your `init.lua` (or a relevant Lua file that's loaded, like `lua/utils.lua` in your config):
+
+_(This function will be added to the plugin itself in a future update. For now, you can define it manually)_
+
+```lua
+-- Place this in your personal Neovim Lua configuration
+-- e.g., in your init.lua or a lua/utils.lua file
+
+-- (Assuming your macro-snippets plugin is loaded and M.macros is populated)
+-- NOTE: This is a placeholder for a function that will ideally be exposed by the plugin directly.
+-- For now, this example shows how such a function would work.
+-- You would call `require('macro-snippets').apply_macro_by_name("YourMacroName")`
+-- if the plugin exposed this function.
+
+-- If you want to implement this manually for now:
+-- Make sure 'macro-snippets' is already required and setup.
+-- local macros_module = require('macro-snippets') -- if not already available
+
+-- _Placeholder: The actual `apply_macro_by_name` will be part of the plugin's API._
+-- _The examples below assume such a function exists or you've defined a similar helper._
+```
+
+_(The subtask will add the actual `apply_macro_by_name` function to `lua/macro-snippets/init.lua` as part of the implementation step for these triggers, so the README will eventually point to that directly. For now, the README will describe the *concept* and how users would use such a function)._
+
+### 1. Direct Key Mappings
+
+You can map specific macros to keybindings in your Neovim configuration. This is useful for macros you use very frequently.
+
+**Example:**
+
+Assuming the plugin exposes `require('macro-snippets').apply_macro_by_name(name)`:
+
+```lua
+-- In your init.lua or keymappings.lua
+vim.keymap.set('n', '<leader>m1', function()
+  require('macro-snippets').apply_macro_by_name("NameOfYourFirstMacro")
+end, { desc = "Apply 'NameOfYourFirstMacro'" })
+
+vim.keymap.set('n', '<leader>m2', function()
+  require('macro-snippets').apply_macro_by_name("AnotherFrequentlyUsedMacro")
+end, { desc = "Apply 'AnotherFrequentlyUsedMacro'" })
+```
+Replace `"NameOfYourFirstMacro"` with the actual name of your saved macro.
+
+### 2. Using a User Command
+
+You can define a user command to apply macros by name. This allows you to run them from the command line (e.g., `:MacroApply MyMacroName`) and also makes them searchable in Telescope's built-in command finder (`:Telescope commands`).
+
+**Example:**
+
+Assuming the plugin exposes `require('macro-snippets').apply_macro_by_name(name)` which is then used by the command:
+
+The plugin will aim to provide a command like `:MacroApply <macro_name>`.
+
+If you were to set this up manually using the helper:
+```lua
+-- In your init.lua or commands.lua
+-- (Requires the apply_macro_by_name function mentioned above)
+vim.api.nvim_create_user_command(
+  'MyApplyMacro', -- Choose your command name
+  function(opts)
+    if opts.args == "" then
+      vim.notify("Error: Macro name required for :MyApplyMacro", vim.log.levels.ERROR)
+      return
+    end
+    -- This would internally call the function to find and apply the macro by name
+    -- For example: YourGlobalHelper.apply_macro_by_name(opts.args)
+    -- Or eventually: require('macro-snippets').apply_macro_by_name(opts.args)
+    vim.notify("Applying macro: " .. opts.args .. " (if found)", vim.log.levels.INFO)
+  end,
+  {
+    nargs = 1,
+    -- Example for completion (if you build a list of macro names):
+    -- complete = function(arglead, cmdline, cursorpos)
+    --   local names = { "Macro1", "Macro2", "FixTypo" } -- fetch your macro names
+    --   return vim.tbl_filter(function(name)
+    --     return vim.startswith(name, arglead)
+    --   end, names)
+    -- end,
+    desc = "Apply a macro-snippet by name"
+  }
+)
+```
+You would then run `:MyApplyMacro NameOfYourMacro`. The plugin aims to provide a built-in `:MacroApply` command with completion in the future.
+
+### 3. Snippet-like Expansion (Advanced)
+
+For very advanced use cases, you might consider setting up snippet-like expansions where typing a short keyword automatically triggers a macro. This is more complex and can have performance implications or conflicts if not carefully designed.
+
+**Example Idea (Insert Mode Mapping):**
+```lua
+-- Caution: Simple insert mode mappings like this can sometimes have unintended side effects.
+-- This assumes an apply_macro_by_name function is available.
+vim.keymap.set('i', '!fix', '<Esc>:<C-u>lua require("macro-snippets").apply_macro_by_name("FixCommonTypo")<CR>a',
+  { desc = "Fix common typo with macro" })
+```
+This example maps `!fix` in insert mode to escape, run the Lua command to apply a macro named "FixCommonTypo", and then re-enter insert mode. More robust solutions would involve `TextChangedI` autocommands or integration with snippet engines, which is beyond the scope of simple setup.
+
+### 4. Contextual Triggers (Conceptual)
+
+Further enhancements could involve contextual triggers, where macros are suggested or become easier to access based on the current filetype, project, or even buffer content. This is an area for future exploration.
+
 ## Sharing Macros
 
 You can share your macros across multiple machines or with a team by customizing the `macro_store_path` option in the `setup` function.
