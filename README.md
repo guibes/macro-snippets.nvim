@@ -102,6 +102,39 @@ In the Telescope window:
 - Press `<C-e>` to edit the selected macro
 - Press `<C-d>` to delete the selected macro
 
+## Example Macro Set
+
+This plugin includes a `sample_macros.json` file in the root of the repository, containing a collection of useful macros for various filetypes to help you get started. These macros are pre-encoded in Base64.
+
+Filetypes covered in the samples include: Markdown, JavaScript, TypeScript, JSX, TSX, YAML, Go, Lua, and Python.
+
+### How to Use the Sample Macros
+
+1.  **Locate your Neovim data directory.** You can find this path by running the command `:echo stdpath('data')` in Neovim. The file where this plugin stores your macros is typically named `macro-snippets.json` inside this data directory.
+    *   Example on Linux/macOS: `~/.local/share/nvim/macro-snippets.json`
+    *   Example on Windows: `~/AppData/Local/nvim-data/macro-snippets.json`
+
+2.  **IMPORTANT: Back up your existing macros (if any).** If you already have a `macro-snippets.json` file with your own saved macros, copying the sample file will **overwrite your current macros**. Make sure to back up your existing file first if you want to keep it.
+
+3.  **Copy `sample_macros.json`:**
+    *   Copy the `sample_macros.json` file from the root of this plugin's directory to your Neovim data directory, renaming it to `macro-snippets.json`.
+    *   For example, if the plugin is installed at `~/.config/nvim/plugged/macro-snippets.nvim` and your data path is `~/.local/share/nvim`, you might run:
+        ```bash
+        cp ~/.config/nvim/plugged/macro-snippets.nvim/sample_macros.json ~/.local/share/nvim/macro-snippets.json
+        ```
+        *(Adjust paths based on your plugin manager and operating system).*
+
+4.  **Restart Neovim or Reload Macros:** After copying the file, restart Neovim, or if the plugin provides a way to reload macros (currently it loads on setup), that would also work. The sample macros should then be available in the Telescope browser (`:Telescope macros`).
+
+### Merging with Existing Macros (Advanced)
+
+If you want to combine the sample macros with your own existing macros, you'll need to manually edit the JSON files. Both your existing `macro-snippets.json` and the `sample_macros.json` contain a JSON array (`[...]`) of macro objects. You would need to:
+1. Open both files in a text editor.
+2. Copy the macro objects (the parts enclosed in `{...}`) from one file.
+3. Paste them into the array of the other file, ensuring you maintain valid JSON syntax (e.g., add a comma between objects if needed).
+4. Save the modified `macro-snippets.json` file.
+It's recommended to use a JSON-aware editor or a JSON linting tool to ensure the resulting file is still valid JSON.
+
 ## Alternative Ways to Trigger Macros
 
 Besides using the Telescope interface, you can also set up other ways to trigger your saved macros for even quicker access. This requires adding a small helper function to your `init.lua` (or any file sourced by it) that the plugin will provide.
