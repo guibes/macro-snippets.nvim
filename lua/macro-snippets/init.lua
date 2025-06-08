@@ -138,37 +138,47 @@ end
 
 -- Add a new macro
 function M.add_macro(name, register, description, filetype)
-  local macro_content = vim.fn.getreg(register)
+  -- name, register, description, filetype are captured in the closure for the scheduled function
+  vim.schedule(function()
+    local macro_content = vim.fn.getreg(register)
 
-  -- Define a threshold for large macro content (e.g., 10KB)
-  local large_macro_threshold = 10000
-  if macro_content and #macro_content > large_macro_threshold then
-    vim.notify(
-      string.format(
-        "Warning: The recorded macro content is very large (%d bytes). Please ensure this was intended.",
-        #macro_content
-      ),
-      vim.log.levels.WARN
-    )
-  end
+    -- Define a threshold for large macro content (e.g., 10KB)
+    local large_macro_threshold = 10000
+    if macro_content and #macro_content > large_macro_threshold then
+      vim.notify(
+        string.format(
+          "Warning: The recorded macro content is very large (%d bytes). Please ensure this was intended.",
+          #macro_content
+        ),
+        vim.log.levels.WARN
+      )
+    end
 
-  -- Validate macro content before adding
-  if not macro_content or macro_content == "" then
-    vim.notify("Error: Empty macro content. Macro not saved.", vim.log.levels.ERROR)
-    return false
-  end
+    if not macro_content or macro_content == "" then
+      vim.notify("Error: Empty macro content. Macro not saved.", vim.log.levels.ERROR)
+      return -- from scheduled function
+    end
 
-  table.insert(M.macros, {
-    name = name,
-    content = macro_content,
-    description = description,
-    register = register,
-    filetype = filetype or "all",
-    created_at = os.time()
-  })
+    -- Ensure filetype has a default if nil or empty
+    local ft = filetype
+    if ft == nil or ft == "" then
+        ft = "all"
+    end
 
-  M.save_macros()
-  return true
+    table.insert(M.macros, {
+      name = name,
+      content = macro_content,
+      description = description,
+      register = register,
+      filetype = ft,
+      created_at = os.time()
+    })
+
+    M.save_macros()
+    vim.notify("Macro '" .. name .. "' saved successfully!", vim.log.levels.INFO)
+  end)
+
+  return true -- Indicates scheduling was successful, not necessarily that saving succeeded yet.
 end
 
 -- Apply a macro

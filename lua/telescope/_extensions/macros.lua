@@ -110,8 +110,7 @@ macros.record = function(opts)
       autocmd!
       autocmd RecordingLeave * lua require('macro-snippets').add_macro("]] ..
     name .. [[", "]] .. register .. [[", "]] .. description .. [[", "]] .. filetype .. [[")
-      autocmd RecordingLeave * lua vim.cmd('autocmd! MacroRecordingComplete')
-      autocmd RecordingLeave * lua vim.notify("Macro ']] .. name .. [[' saved!", vim.log.levels.INFO)
+      autocmd RecordingLeave * lua vim.cmd('autocmd! MacroRecordingComplete') -- This removes the augroup itself
     augroup END
   ]])
 end
