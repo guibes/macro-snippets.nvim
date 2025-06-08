@@ -95,7 +95,10 @@ Please be mindful of this when recording. If you intend to yank text as part of 
 This will show all macros applicable to the current filetype.
 
 In the Telescope window:
-- Press `Enter` to apply the selected macro
+- Press `Enter` on a selected macro:
+    - You will be prompted: "Load to register (a-z, leave blank to apply directly): "
+    - **If you enter a single lowercase letter (a-z) and press Enter:** The macro's content will be loaded into that register (e.g., `@a`). You can then execute it using Vim's native `@<register>` command (e.g., `@a`). A notification will confirm this.
+    - **If you leave the prompt blank and press Enter:** The macro will be applied (executed) directly in the current buffer, similar to the previous behavior.
 - Press `<C-e>` to edit the selected macro
 - Press `<C-d>` to delete the selected macro
 
