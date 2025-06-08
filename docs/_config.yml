@@ -1,0 +1,3 @@
+theme: jekyll-theme-minimal
+title: macro-snippets.nvim
+description: A Neovim plugin for managing, browsing, and applying macros with Telescope.

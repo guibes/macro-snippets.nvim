@@ -30,11 +30,11 @@
       -- or if you have a dotfiles repo:
       -- macro_store_path = vim.fn.expand("$HOME/.dotfiles/nvim/macros/my-macros.json")
     })
-    
+
     -- Optional: Set up keymaps
-    vim.keymap.set('n', '<leader>mr', '<cmd>Telescope macros record_macro<CR>', 
+    vim.keymap.set('n', '<leader>mr', '<cmd>Telescope macros record_macro<CR>',
       { desc = 'Record Macro' })
-    vim.keymap.set('n', '<leader>mm', '<cmd>Telescope macros<CR>', 
+    vim.keymap.set('n', '<leader>mm', '<cmd>Telescope macros<CR>',
       { desc = 'Browse Macros' })
   end,
 }
@@ -56,11 +56,11 @@ use {
       -- or if you have a dotfiles repo:
       -- macro_store_path = vim.fn.expand("$HOME/.dotfiles/nvim/macros/my-macros.json")
     })
-    
+
     -- Optional: Set up keymaps
-    vim.keymap.set('n', '<leader>mr', '<cmd>Telescope macros record_macro<CR>', 
+    vim.keymap.set('n', '<leader>mr', '<cmd>Telescope macros record_macro<CR>',
       { desc = 'Record Macro' })
-    vim.keymap.set('n', '<leader>mm', '<cmd>Telescope macros<CR>', 
+    vim.keymap.set('n', '<leader>mm', '<cmd>Telescope macros<CR>',
       { desc = 'Browse Macros' })
   end
 }
@@ -287,13 +287,13 @@ Developing a full animated preview feature would require substantial development
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information on how to report bugs, suggest features, and submit pull requests.
+We welcome contributions! Please see our [Contributing Guidelines](../CONTRIBUTING.md) for more information on how to report bugs, suggest features, and submit pull requests.
 
-All interactions in this project are subject to our [Code of Conduct](CODE_OF_CONDUCT.md).
+All interactions in this project are subject to our [Code of Conduct](../CODE_OF_CONDUCT.md).
 
 ## Code of Conduct
 
-Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms. Please read the [Code of Conduct](CODE_OF_CONDUCT.md) for details.
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms. Please read the [Code of Conduct](../CODE_OF_CONDUCT.md) for details.
 
 ## License
 
