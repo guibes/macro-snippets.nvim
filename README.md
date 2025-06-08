@@ -1,6 +1,6 @@
 # macro-snippets.nvim
 
-A Neovim plugin that provides a Telescope interface for managing, browsing, and applying macros.
+**macro-snippets.nvim** is a powerful Neovim macro manager plugin that enhances your workflow by providing a seamless Telescope interface to record, save, browse, and apply macros. Stop losing your valuable macros between sessions! With this plugin, you can persistently store your Lua macros (and any VimL macros) with names, descriptions, and even filetype associations. Effortlessly search and execute your saved command sequences, turning repetitive tasks into single actions. Whether you're looking to record and play macros on the fly, build a library of reusable snippets, or simply want a better way to handle Neovim's macro capabilities, macro-snippets.nvim is the essential tool for efficient text editing.
 
 ## Features
 
@@ -284,6 +284,16 @@ A suggestion was made to include animated previews of macro execution. While thi
 Currently, `macro-snippets.nvim` provides a text-based preview of the macro's content (the actual sequence of commands). This offers a practical way to understand what a macro does before applying it.
 
 Developing a full animated preview feature would require substantial development effort and is considered out of scope for the current version. However, it remains an interesting area for future exploration and contributions from the community.
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information on how to report bugs, suggest features, and submit pull requests.
+
+All interactions in this project are subject to our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Code of Conduct
+
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms. Please read the [Code of Conduct](CODE_OF_CONDUCT.md) for details.
 
 ## License
 
